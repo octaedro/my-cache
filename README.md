@@ -1,4 +1,4 @@
-# my-cache
+# My Cache
 
 A high-performance in-memory cache service inspired by Redis internals. Built from scratch in TypeScript with ESM, focusing on performance and internal mechanisms.
 
@@ -239,6 +239,7 @@ console.log(stats);
 ```
 
 **Available metrics:**
+
 - `hits`: Number of successful GET/ZSCORE/ZRANK operations
 - `misses`: Number of failed lookups (key not found or expired)
 - `evictions`: Number of keys evicted due to memory pressure
@@ -471,10 +472,12 @@ npm run load             # Build and run load test
 ### Observability (Already Implemented)
 
 This project already includes:
+
 - **`getStats()` method**: Returns hits, misses, evictions, expirations, operations, keyCount, memoryUsed, and hitRate
 - See "Observability" section above for usage
 
 Additional improvements for production:
+
 - **Slow log**: Track commands exceeding latency threshold
 - **INFO command**: Detailed runtime statistics and diagnostics
 - **Metrics export**: Prometheus/StatsD integration
