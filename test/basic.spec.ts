@@ -287,3 +287,59 @@ test('IntSet: maintains sorted order and upgrades', () => {
   assert.ok(set.has(3));
   assert.ok(set.has(5));
 });
+
+test('Cache: getStats returns observability metrics', () => {
+  const cache = new Cache();
+
+  // Initial stats
+  let stats = cache.getStats();
+  assert.strictEqual(stats.hits, 0);
+  assert.strictEqual(stats.misses, 0);
+  assert.strictEqual(stats.evictions, 0);
+  assert.strictEqual(stats.operations, 0);
+  assert.strictEqual(stats.hitRate, 0);
+
+  // Perform operations
+  cache.set('key1', 'value1');
+  cache.set('key2', 'value2');
+  cache.get('key1');  // hit
+  cache.get('key1');  // hit
+  cache.get('nonexistent');  // miss
+
+  stats = cache.getStats();
+  assert.strictEqual(stats.hits, 2);
+  assert.strictEqual(stats.misses, 1);
+  assert.strictEqual(stats.operations, 5);  // 2 sets + 3 gets
+  assert.strictEqual(stats.keyCount, 2);
+  assert.strictEqual(stats.hitRate, 2/3);
+  assert.ok(stats.memoryUsed > 0);
+
+  cache.shutdown();
+});
+
+test('Cache: incremental memory tracking for ZADD/ZREM', () => {
+  const cache = new Cache();
+
+  // Add first member
+  cache.zadd('myzset', 100, 'member1');
+  const stats1 = cache.getStats();
+  const memory1 = stats1.memoryUsed;
+  assert.ok(memory1 > 0);
+
+  // Add second member - memory should increase by ~80 bytes
+  cache.zadd('myzset', 200, 'member2');
+  const stats2 = cache.getStats();
+  const memory2 = stats2.memoryUsed;
+  assert.ok(memory2 > memory1, 'Memory should increase after adding member');
+  const delta = memory2 - memory1;
+  assert.ok(delta >= 50 && delta <= 150, 'Delta should be around 80 bytes');
+
+  // Remove member - memory should decrease
+  cache.zrem('myzset', 'member2');
+  const stats3 = cache.getStats();
+  const memory3 = stats3.memoryUsed;
+  assert.ok(memory3 < memory2, 'Memory should decrease after removing member');
+  assert.ok(Math.abs(memory3 - memory1) < 50, 'Memory should be close to initial value');
+
+  cache.shutdown();
+});
