@@ -1,0 +1,33 @@
+{
+  "name": "my-cache",
+  "version": "1.0.0",
+  "description": "High-performance in-memory cache service inspired by Redis internals",
+  "type": "module",
+  "main": "./dist/cache.js",
+  "types": "./dist/cache.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "npm run build && node dist/server.js",
+    "dev": "tsx src/server.ts",
+    "test": "npm run build && node --test dist/**/*.spec.js",
+    "test:dev": "tsx --test test/**/*.spec.ts",
+    "test:homework": "./test-homework.sh",
+    "load": "npm run build && node dist/load.js",
+    "load:dev": "tsx test/load.ts"
+  },
+  "keywords": [
+    "cache",
+    "in-memory",
+    "lru",
+    "lfu",
+    "zset",
+    "skiplist"
+  ],
+  "author": "Fernando Marichal",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^24.6.0",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.2"
+  }
+}
