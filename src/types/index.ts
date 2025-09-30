@@ -25,3 +25,15 @@ export interface UsageMetadata {
   freq: number;
   lastDecay: number;
 }
+
+export interface CacheStats {
+  hits: number;
+  misses: number;
+  evictions: number;
+  expirations: number;
+  operations: number;
+  keyCount: number;
+  memoryUsed: number;
+  hitRate: number;
+}
+

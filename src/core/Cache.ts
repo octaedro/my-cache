@@ -3,18 +3,7 @@ import { ZSet } from '../zset/index.js';
 import { TTLManager } from '../expiration/index.js';
 import { UsageTracker } from '../eviction/index.js';
 import { IntSet } from '../encodings/index.js';
-import type { CacheEntry, CacheOptions } from '../types/index.js';
-
-interface CacheStats {
-  hits: number;
-  misses: number;
-  evictions: number;
-  expirations: number;
-  operations: number;
-  keyCount: number;
-  memoryUsed: number;
-  hitRate: number;
-}
+import type { CacheEntry, CacheOptions, CacheStats } from '../types/index.js';
 
 /**
  * Cache - Main cache interface (Optimized version)
