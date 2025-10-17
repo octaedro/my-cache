@@ -2,18 +2,6 @@
 
 A high-performance in-memory cache service inspired by Redis internals. Built from scratch in TypeScript with ESM, focusing on performance and internal mechanisms.
 
-## Homework Requirements ✓
-
-This project fulfills all requirements:
-
-1. ✅ **Standalone caching service** - Written in TypeScript, runs as HTTP server
-2. ✅ **Add/Remove/Fetch operations** - `SET`, `GET`, `DEL` endpoints (+ advanced ZSET operations)
-3. ✅ **Optimized data structures** - Dictionary with incremental rehash, ZSet with skiplist, IntSet encoding
-4. ✅ **HTTP JSON API** - Simple REST API for easy testing
-5. ✅ **Runnable service** - `npm install && npm run dev` to start
-6. ✅ **Focus on cache internals** - Implements LRU/LFU eviction, TTL expiration, memory tracking, and multiple optimizations
-7. ✅ **Valid package.json** - Includes all scripts and dependencies
-
 **Quick test:** Start server with `npm run dev`, then run `npm run test:homework` to verify all basic operations. See [Quick Test](#quick-test---minimum-requirements) section below for details.
 
 ## Features
@@ -180,7 +168,7 @@ npm test
 
 Tests cover:
 
-- Basic SET/GET/DEL operations (homework requirements)
+- Basic SET/GET/DEL operations
 - TTL passive and active expiration with batch delete
 - ZSET operations (add, score, rank, range, remove)
 - Score update behavior (remove + reinsert)
